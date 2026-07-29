@@ -16,7 +16,11 @@ export function loadData(): AppData {
 }
 
 export function saveData(data: AppData): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+  } catch {
+    // Private mode / quota — keep the session working even if persist fails
+  }
 }
 
 function emptyData(): AppData {
