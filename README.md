@@ -12,7 +12,10 @@ A phone-friendly to-do web app (PWA) with:
 
 **https://kirk-creator.github.io/To-do/**
 
-> GitHub Pages must serve the **built** app (not the raw Vite source). After merging, set **Settings → Pages → Source** to **GitHub Actions**. The deploy workflow builds on every push to `main`.
+GitHub Pages must serve the **built** app (not the raw Vite source). Pick one:
+
+1. **Fastest:** Settings → Pages → Branch → **`gh-pages`** / root (a built deploy branch is already published)
+2. **Ongoing:** Settings → Pages → Source → **GitHub Actions** (workflow builds on every push to `main` after merge)
 
 ## Run locally
 
