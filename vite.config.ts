@@ -2,13 +2,22 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
-// GitHub Pages serves this repo at https://kirk-creator.github.io/To-do/
+// GitHub Pages project site: https://kirk-creator.github.io/To-do/
 const base = '/To-do/'
 
 export default defineConfig({
   base,
   plugins: [
     react(),
+    {
+      name: 'strip-pages-boot-on-build',
+      transformIndexHtml(html) {
+        return html.replace(
+          /<!--\s*\n?\s*GitHub Pages currently serves[\s\S]*?<\/script>\n?/,
+          '',
+        )
+      },
+    },
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
@@ -43,4 +52,17 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    // Stable names so the source index.html can boot these on GitHub Pages
+    // when Pages is still set to "Deploy from branch" → main.
+    cssCodeSplit: false,
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/app.js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: (info) =>
+          info.name?.endsWith('.css') ? 'assets/app.css' : 'assets/[name][extname]',
+      },
+    },
+  },
 })
