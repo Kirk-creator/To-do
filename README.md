@@ -12,10 +12,11 @@ A phone-friendly to-do web app (PWA) with:
 
 **https://kirk-creator.github.io/To-do/**
 
-GitHub Pages must serve the **built** app (not the raw Vite source). Pick one:
+The production JS/CSS bundle is committed under `assets/` so the app works even when GitHub Pages is set to **Deploy from a branch → main**. After code changes, run `npm run build:pages` (or merge to `main` and let Actions sync it).
 
-1. **Fastest:** Settings → Pages → Branch → **`gh-pages`** / root (a built deploy branch is already published)
-2. **Ongoing:** Settings → Pages → Source → **GitHub Actions** (workflow builds on every push to `main` after merge)
+Optional hardening in **Settings → Pages**:
+- Source **GitHub Actions**, or
+- Branch **`gh-pages`** / root
 
 ## Run locally
 
@@ -32,10 +33,10 @@ Open the URL Vite prints (usually `http://localhost:5173`).
 2. On iPhone (Safari): Share → **Add to Home Screen**
 3. On Android (Chrome): Menu → **Install app** / **Add to Home screen**
 
-Or build yourself and host the `dist` folder:
+Or build yourself:
 
 ```bash
-npm run build
+npm run build:pages
 npm run preview
 ```
 

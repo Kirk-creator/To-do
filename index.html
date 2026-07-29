@@ -36,6 +36,36 @@
     <div id="root">
       <p id="boot-fallback">Loading checklist…</p>
     </div>
+    <!-- Vite dev entry (transformed away on `vite build`) -->
     <script type="module" src="/src/main.tsx"></script>
+    <!--
+      GitHub Pages currently serves source from `main`, so /src/main.tsx never
+      runs. This classic script boots the committed production bundle instead.
+      Kept as a non-module script so Vite does not try to bundle it.
+    -->
+    <script>
+      (function () {
+        if (!location.hostname.endsWith('github.io')) return
+        if (!document.getElementById('boot-fallback')) return
+        if (window.__DAILY_CHECKLIST_BOOTED__) return
+
+        var css = document.createElement('link')
+        css.rel = 'stylesheet'
+        css.href = './assets/app.css'
+        document.head.appendChild(css)
+
+        var script = document.createElement('script')
+        script.type = 'module'
+        script.src = './assets/app.js'
+        script.onerror = function () {
+          var el = document.getElementById('boot-fallback')
+          if (el) {
+            el.textContent =
+              'Could not load the app bundle. Try a hard refresh, or open the site again in a minute.'
+          }
+        }
+        document.body.appendChild(script)
+      })()
+    </script>
   </body>
 </html>
